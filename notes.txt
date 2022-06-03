@@ -1,0 +1,7 @@
+component reload ke liye component me key ka kuchh 
+aisa value set karo jo ki unique ho aur uske change 
+hone par component reload ho jaaye
+
+front end
+integrate with api
+now use redux for state management
