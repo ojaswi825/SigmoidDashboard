@@ -9,6 +9,7 @@ function DateRange(props) {
                 selected={props.defaultSelected}
                 minDate={props.minDate}
                 maxDate={props.maxDate}
+                onChange={(date) => props.onDateSelect(date)}
             ></DatePicker>
         </Box>
     );

@@ -1,4 +1,4 @@
-import { Flex, Spacer } from "@chakra-ui/react";
+import { Flex, Spacer, VStack } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -8,6 +8,9 @@ import DateRange from "../Components/Filters/DateRange";
 import Navbar from "../Components/Navigation/Navbar";
 
 import { getLocalToken } from "../Redux/Authentication/AuthenticationActions";
+import PiePlot from "../Components/Charts/PiePlot";
+import TablePlot from "../Components/Charts/TablePlot";
+import BarPlot from "../Components/Charts/BarPlot";
 
 const mapStateToProps = (state) => {
     return {
@@ -25,6 +28,9 @@ function Dashboard(props) {
     const navigate = useNavigate();
     const [minDate, setMinDate] = useState(null);
     const [maxDate, setMaxDate] = useState(null);
+
+    const [start, setStart] = useState(null);
+    const [end, setEnd] = useState(null);
 
     useEffect(() => {
         props.getLocalToken();
@@ -57,6 +63,8 @@ function Dashboard(props) {
                     console.log(startDate, endDate);
                     setMinDate(startDate);
                     setMaxDate(endDate);
+                    setStart(startDate);
+                    setEnd(endDate);
                 });
         }
         // eslint-disable-next-line
@@ -73,24 +81,47 @@ function Dashboard(props) {
         <div>
             <Navbar />
             <Flex padding="2rem" w="40%">
-                {minDate && maxDate && (
+                {minDate && maxDate && start && end && (
                     <DateRange
-                        defaultSelected={minDate}
-                        minDate={minDate}
-                        maxDate={maxDate}
+                        defaultSelected={start}
+                        minDate={start}
+                        maxDate={end}
                         onDateSelect={onMinDateSelect}
                     />
                 )}
                 <Spacer />
-                {minDate && maxDate && (
+                {minDate && maxDate && start && end && (
                     <DateRange
-                        defaultSelected={maxDate}
-                        minDate={minDate}
-                        maxDate={maxDate}
+                        defaultSelected={end}
+                        minDate={start}
+                        maxDate={end}
                         onDateSelect={onMaxDateSelect}
                     />
                 )}
             </Flex>
+            <VStack>
+                {minDate && maxDate && (
+                    <BarPlot
+                        key={minDate.toString() + maxDate.toString() + "bar"}
+                        startDate={minDate.getTime().toString()}
+                        endDate={maxDate.getTime().toString()}
+                    />
+                )}
+                {minDate && maxDate && (
+                    <PiePlot
+                        key={minDate.toString() + maxDate.toString() + "pie"}
+                        startDate={minDate.getTime().toString()}
+                        endDate={maxDate.getTime().toString()}
+                    />
+                )}
+                {minDate && maxDate && (
+                    <TablePlot
+                        key={minDate.toString() + maxDate.toString() + "table"}
+                        startDate={minDate.getTime().toString()}
+                        endDate={maxDate.getTime().toString()}
+                    />
+                )}
+            </VStack>
         </div>
     );
 }
