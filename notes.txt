@@ -5,3 +5,7 @@ hone par component reload ho jaaye
 front end
 integrate with api
 now use redux for state management
+
+create seperate reducers for chart, pie, bar components
+
+last: use timeout cookies for remember me

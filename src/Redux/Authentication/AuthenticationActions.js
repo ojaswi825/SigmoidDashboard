@@ -1,17 +1,15 @@
-import { GET_TOKEN, SET_TOKEN } from "./AuthenticationActionTypes";
+import { GET_LOCAL_TOKEN, SET_LOCAL_TOKEN } from "./AuthenticationActionTypes";
 
-export const setToken = (token) => {
+export const setLocalToken = (token) => {
     return {
-        type: SET_TOKEN,
-        payload: {
-            token,
-        },
+        type: SET_LOCAL_TOKEN,
+        payload: { token: token },
     };
 };
 
-export const getToken = () => {
+export const getLocalToken = () => {
     return {
-        type: GET_TOKEN,
+        type: GET_LOCAL_TOKEN,
         payload: {},
     };
 };

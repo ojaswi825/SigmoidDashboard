@@ -1,2 +1,2 @@
-export const SET_TOKEN = "SET_TOKEN";
-export const GET_TOKEN = "GET_TOKEN";
+export const GET_LOCAL_TOKEN = "GET_LOCAL_TOKEN";
+export const SET_LOCAL_TOKEN = "SET_LOCAL_TOKEN";

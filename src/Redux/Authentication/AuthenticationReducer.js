@@ -1,21 +1,28 @@
-import { SET_TOKEN, GET_TOKEN } from "./AuthenticationActionTypes";
+import { GET_LOCAL_TOKEN, SET_LOCAL_TOKEN } from "./AuthenticationActionTypes";
 
 const intitialState = {
-    token: "",
+    localToken: "",
 };
 
 export const authenticationReducer = (state = intitialState, action) => {
     switch (action.type) {
-        case SET_TOKEN:
-            localStorage.setItem("x-auth-token", action.payload.token);
-            return { ...state, token: action.payload.token };
+        case SET_LOCAL_TOKEN:
+            localStorage.setItem("sigmoidLocalToken", action.payload.token);
+            return {
+                ...state,
 
-        case GET_TOKEN:
-            let token = localStorage.getItem("x-auth-token");
-            if (!token) {
-                token = "";
+                localToken: action.payload.token,
+            };
+
+        case GET_LOCAL_TOKEN:
+            let localToken = localStorage.getItem("sigmoidLocalToken");
+            if (!localToken) {
+                localToken = "";
             }
-            return { ...state, token: token };
+            return {
+                ...state,
+                localToken: localToken,
+            };
 
         default:
             return state;

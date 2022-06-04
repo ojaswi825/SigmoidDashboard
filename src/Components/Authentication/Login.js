@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 import axios from "axios";
@@ -14,19 +14,11 @@ import {
     useToast,
 } from "@chakra-ui/react";
 
-import {
-    getToken,
-    setToken,
-} from "../../Redux/Authentication/AuthenticationActions";
-
-const mapStateToProps = (state) => {
-    return { authToken: state.authentication.token };
-};
+import { setLocalToken } from "../../Redux/Authentication/AuthenticationActions";
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        getAuthToken: () => dispatch(getToken()),
-        setAuthToken: (token) => dispatch(setToken(token)),
+        setLocalToken: (token) => dispatch(setLocalToken(token)),
     };
 };
 
@@ -40,15 +32,8 @@ function Login(props) {
     const loginEndpointURI = "https://sigviewauth.sigmoid.io/signIn";
 
     const navigate = useNavigate();
-    useEffect(() => {
-        props.getAuthToken();
-        if (props.authToken) {
-            navigate("/dashboard");
-        }
-        // eslint-disable-next-line
-    }, []);
-
     const toast = useToast();
+
     const handleLogin = async () => {
         setLoading(true);
         if (!email || !password) {
@@ -59,6 +44,7 @@ function Login(props) {
                 isClosable: true,
                 position: "top",
             });
+            setLoading(false);
             return;
         }
 
@@ -81,16 +67,8 @@ function Login(props) {
                 config
             );
 
-            toast({
-                title: "User logged in successfully",
-                status: "success",
-                duration: 5000,
-                isClosable: true,
-                position: "top",
-            });
-            if (remember) {
-                props.setAuthToken(response.data.token);
-            }
+            props.setLocalToken(response.data.token);
+            console.log(response.data.token);
 
             navigate("/dashboard");
         } catch (error) {
@@ -160,4 +138,4 @@ function Login(props) {
     );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(null, mapDispatchToProps)(Login);

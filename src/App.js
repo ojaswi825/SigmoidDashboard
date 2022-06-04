@@ -6,6 +6,7 @@ import { Provider } from "react-redux";
 import { appStore } from "./Redux/AppStore";
 import Authentication from "./Pages/Authentication";
 import Dashboard from "./Pages/Dashboard";
+import Logout from "./Pages/Logout";
 
 function App() {
     return (
@@ -15,6 +16,7 @@ function App() {
                     <Routes>
                         <Route path="/" element={<Authentication />} />
                         <Route path="/dashboard" element={<Dashboard />} />
+                        <Route path="/logout" element={<Logout />} />
                     </Routes>
                 </Router>
             </Provider>
