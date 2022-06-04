@@ -2,16 +2,19 @@ import React, { useEffect, useState } from "react";
 import { Box } from "@chakra-ui/react";
 import { PieChart, Pie, Tooltip } from "recharts";
 
+import LoadingScreen from "../../Utilities/LoadingScreen";
 import { fetchData } from "../../Services/FetchData";
 
 function PiePlot({ startDate, endDate }) {
     const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
+        setLoading(true);
         fetchData(startDate, endDate, "pie", 5).then((data) => {
             setData(data);
+            setLoading(false);
         });
-
         // eslint-disable-next-line
     }, []);
 
@@ -21,7 +24,8 @@ function PiePlot({ startDate, endDate }) {
 
     return (
         <Box w="max-content">
-            {data && (
+            {loading && <LoadingScreen />}
+            {!loading && data && (
                 <PieChart width={730} height={250}>
                     <Pie
                         data={data}

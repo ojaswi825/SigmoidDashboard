@@ -13,14 +13,18 @@ import {
 } from "@chakra-ui/react";
 
 import { fetchData } from "../../Services/FetchData";
+import LoadingScreen from "../../Utilities/LoadingScreen";
 
 function TablePlot({ startDate, endDate }) {
     const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        fetchData(startDate, endDate, "table", 10).then((data) =>
-            setData(data)
-        );
+        setLoading(true);
+        fetchData(startDate, endDate, "table", 10).then((data) => {
+            setData(data);
+            setLoading(false);
+        });
         // eslint-disable-next-line
     }, []);
 
@@ -30,7 +34,8 @@ function TablePlot({ startDate, endDate }) {
 
     return (
         <Box w="fit-content">
-            {data && (
+            {loading && <LoadingScreen />}
+            {!loading && data && (
                 <TableContainer w="500">
                     <Table>
                         <TableCaption>Data</TableCaption>
