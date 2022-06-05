@@ -56,14 +56,13 @@ function Dashboard(props) {
     };
 
     return (
-        <div style={{ width: "max-content", border: "2px solid black" }}>
+        <div>
             <Navbar />
             <Text fontSize="5xl" marginTop="2rem" marginLeft="2rem">
                 Data Dashboard
             </Text>
             <hr />
             <Box
-                border="2px"
                 display="flex"
                 marginTop="2rem"
                 padding="2rem"
@@ -71,7 +70,7 @@ function Dashboard(props) {
                 maxW="max-content"
             >
                 <VStack align="left" w="60%">
-                    <Box border="2px" display="flex" marginBottom="5rem">
+                    <Box display="flex" marginBottom="5rem">
                         {minDate && maxDate && start && end && (
                             <DateRangePicker
                                 minDate={minDate}
@@ -82,7 +81,6 @@ function Dashboard(props) {
                                 onMaxDateSelect={onMaxDateSelect}
                             />
                         )}
-
                         <Spacer />
                         {minDate && maxDate && (
                             <PiePlot
@@ -109,7 +107,7 @@ function Dashboard(props) {
                         />
                     )}
                 </VStack>
-
+                <Spacer />
                 {minDate && maxDate && (
                     <TablePlot
                         title="Total impressions"

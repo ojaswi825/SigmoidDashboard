@@ -4,7 +4,6 @@ import { Box, Text } from "@chakra-ui/react";
 import Chart from "chart.js/auto";
 
 import LoadingScreen from "../../Utilities/LoadingScreen";
-import InvalidRange from "../../Utilities/InvalidRange";
 
 import { fetchData } from "../../Services/FetchData";
 
@@ -51,16 +50,13 @@ function PiePlot({ startDate, endDate, title }) {
     }, [ctx]);
 
     return (
-        <Box border="2px" className="card">
+        <Box className="card">
             <>
                 <Text fontSize="3xl">{title}</Text>
                 <hr style={{ marginBottom: "2rem" }} />
                 <canvas id="piePlot"></canvas>
             </>
             {loading && <LoadingScreen />}
-            {!loading && parseInt(startDate) > parseInt(endDate) && (
-                <InvalidRange />
-            )}
         </Box>
     );
 }

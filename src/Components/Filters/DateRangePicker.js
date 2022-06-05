@@ -8,6 +8,8 @@ function DateRangePicker(props) {
     const [startShow, setStartShow] = useState(true);
     const [endShow, setEndShow] = useState(false);
 
+    const [error, setError] = useState(false);
+
     const handleStartShow = () => {
         setStartShow(!startShow);
         setEndShow(false);
@@ -18,8 +20,26 @@ function DateRangePicker(props) {
         setEndShow(!endShow);
     };
 
+    const handleMinChange = (date) => {
+        if (date > props.maxDate) {
+            setError(true);
+        } else {
+            props.onMinDateSelect(date);
+            setError(false);
+        }
+    };
+
+    const handleMaxChange = (date) => {
+        if (date < props.minDate) {
+            setError(true);
+        } else {
+            props.onMaxDateSelect(date);
+            setError(false);
+        }
+    };
+
     return (
-        <Box border="2px" className="card" w="300px">
+        <Box className="card" w="300px">
             <Text fontSize="3xl">Pick a range</Text>
             <hr />
             <br />
@@ -36,7 +56,7 @@ function DateRangePicker(props) {
                         selected={props.minDate}
                         minDate={props.start}
                         maxDate={props.end}
-                        onChange={(date) => props.onMinDateSelect(date)}
+                        onChange={(date) => handleMinChange(date)}
                     />
                 )}
                 <Button
@@ -51,9 +71,10 @@ function DateRangePicker(props) {
                         selected={props.maxDate}
                         minDate={props.start}
                         maxDate={props.end}
-                        onChange={(date) => props.onMaxDateSelect(date)}
+                        onChange={(date) => handleMaxChange(date)}
                     />
                 )}
+                {error && <Text color="red">Please select a valid range</Text>}
             </VStack>
         </Box>
     );
