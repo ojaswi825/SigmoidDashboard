@@ -21,7 +21,7 @@ function DateRangePicker(props) {
     };
 
     const handleMinChange = (date) => {
-        if (date > props.maxDate) {
+        if (date >= props.maxDate) {
             setError(true);
         } else {
             props.onMinDateSelect(date);
@@ -30,7 +30,7 @@ function DateRangePicker(props) {
     };
 
     const handleMaxChange = (date) => {
-        if (date < props.minDate) {
+        if (date <= props.minDate) {
             setError(true);
         } else {
             props.onMaxDateSelect(date);
