@@ -21,29 +21,31 @@ function BarPlot({ startDate, endDate, title, boxStyles }) {
             setCtx(document.getElementById("barPlot"));
         }
         getData();
+        setLoading(false);
         // eslint-disable-next-line
     }, []);
 
     useEffect(() => {
-        const chartData = {
-            labels: data.map((item) => item.publisherId),
-            datasets: [
-                {
-                    label: "No. of impressions",
-                    data: data.map((item) => item.impressions_offered),
-                    backgroundColor: Array(data.length).fill("#fe4439"),
-                },
-            ],
-        };
-        const config = {
-            type: "bar",
-            data: chartData,
-            options: {},
-        };
-        const barChart = new Chart(ctx, config);
-        setLoading(false);
+        if (ctx) {
+            const chartData = {
+                labels: data.map((item) => item.publisherId),
+                datasets: [
+                    {
+                        label: "No. of impressions",
+                        data: data.map((item) => item.impressions_offered),
+                        backgroundColor: Array(data.length).fill("#fe4439"),
+                    },
+                ],
+            };
+            const config = {
+                type: "bar",
+                data: chartData,
+                options: {},
+            };
+            const barChart = new Chart(ctx, config);
 
-        return () => barChart.destroy();
+            return () => barChart.destroy();
+        }
         // eslint-disable-next-line
     }, [ctx]);
 
@@ -54,14 +56,16 @@ function BarPlot({ startDate, endDate, title, boxStyles }) {
                 <InvalidRange />
             )}
 
-            <>
-                <Text fontSize="3xl" marginBottom="1rem">
-                    {title}
-                </Text>
-                <hr />
+            {!loading && (
+                <>
+                    <Text fontSize="3xl" marginBottom="1rem">
+                        {title}
+                    </Text>
+                    <hr />
 
-                <canvas id="barPlot"></canvas>
-            </>
+                    <canvas id="barPlot"></canvas>
+                </>
+            )}
         </Box>
     );
 }

@@ -21,29 +21,31 @@ function PiePlot({ startDate, endDate, title, boxStyles }) {
             setCtx(document.getElementById("piePlot"));
         }
         getData();
+        setLoading(false);
         // eslint-disable-next-line
     }, []);
 
     useEffect(() => {
-        const chartData = {
-            labels: data.map((item) => item.publisherId),
-            datasets: [
-                {
-                    label: "No. of impressions",
-                    data: data.map((item) => item.impressions_offered),
-                    backgroundColor: Array(data.length).fill("#fe4439"),
-                },
-            ],
-        };
-        const config = {
-            type: "doughnut",
-            data: chartData,
-            options: {},
-        };
-        const barChart = new Chart(ctx, config);
-        setLoading(false);
+        if (ctx) {
+            const chartData = {
+                labels: data.map((item) => item.publisherId),
+                datasets: [
+                    {
+                        label: "No. of impressions",
+                        data: data.map((item) => item.impressions_offered),
+                        backgroundColor: Array(data.length).fill("#fe4439"),
+                    },
+                ],
+            };
+            const config = {
+                type: "doughnut",
+                data: chartData,
+                options: {},
+            };
+            const barChart = new Chart(ctx, config);
 
-        return () => barChart.destroy();
+            return () => barChart.destroy();
+        }
         // eslint-disable-next-line
     }, [ctx]);
 
@@ -54,11 +56,13 @@ function PiePlot({ startDate, endDate, title, boxStyles }) {
             )}
             {loading && <LoadingScreen boxStyles={boxStyles} />}
 
-            <>
-                <Text fontSize="3xl">{title}</Text>
-                <hr style={{ marginBottom: "2rem" }} />
-                <canvas id="piePlot"></canvas>
-            </>
+            {!loading && (
+                <>
+                    <Text fontSize="3xl">{title}</Text>
+                    <hr style={{ marginBottom: "2rem" }} />
+                    <canvas id="piePlot"></canvas>
+                </>
+            )}
         </Box>
     );
 }

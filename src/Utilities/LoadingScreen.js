@@ -1,7 +1,7 @@
 import { Box } from "@chakra-ui/react";
 import React from "react";
 
-function LoadingScreen({ boxStyles }) {
+function LoadingScreen() {
     return (
         <Box
             w={350}
@@ -9,7 +9,6 @@ function LoadingScreen({ boxStyles }) {
             display="flex"
             alignItems="center"
             justifyContent="center"
-            style={boxStyles}
         >
             <div>
                 <img
