@@ -17,7 +17,7 @@ const boxStyles = {
     boxShadow: "0 5px 10px #AAA7A7",
     backgroundColor: "#ffffff",
     borderRadius: "0.5rem",
-    padding: "1rem",
+    padding: "0.8rem",
     justifyContent: "center",
     alignItems: "center",
 };
