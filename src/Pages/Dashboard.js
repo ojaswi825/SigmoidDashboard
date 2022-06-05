@@ -36,7 +36,7 @@ function Dashboard(props) {
     useEffect(() => {
         props.getLocalToken();
         if (!props.localToken) {
-            navigate("/logout");
+            navigate("/");
         } else {
             getDateRange().then((dates) => {
                 setMinDate(dates.startDate);

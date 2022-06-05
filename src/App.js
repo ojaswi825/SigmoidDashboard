@@ -16,7 +16,7 @@ function App() {
                     <Routes>
                         <Route path="/" element={<Authentication />} />
                         <Route path="/dashboard" element={<Dashboard />} />
-                        <Route path="/logout" element={<Logout />} />
+                        <Route path="*" element={<Logout />} />
                     </Routes>
                 </Router>
             </Provider>

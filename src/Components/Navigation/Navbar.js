@@ -25,7 +25,7 @@ function Navbar(props) {
             isClosable: true,
             position: "top",
         });
-        navigate("/logout");
+        navigate("/");
     };
 
     return (
