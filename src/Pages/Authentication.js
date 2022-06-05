@@ -41,7 +41,6 @@ function Authentication(props) {
     return (
         <Container maxW="xl" centerContent>
             <Box
-                border="2px"
                 d="flex"
                 justifyContent="center"
                 p={3}
@@ -61,14 +60,7 @@ function Authentication(props) {
                 </Text>
             </Box>
             <br />
-            <Box
-                border="2px"
-                bg="#ffffff"
-                w="100%"
-                p={4}
-                borderRadius="lg"
-                boxShadow="xl"
-            >
+            <Box bg="#ffffff" w="100%" p={4} borderRadius="lg" boxShadow="xl">
                 <Login />
             </Box>
         </Container>

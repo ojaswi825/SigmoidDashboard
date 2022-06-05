@@ -30,7 +30,6 @@ function Navbar(props) {
 
     return (
         <Box
-            border="2px"
             display="flex"
             background="black"
             alignItems="center"
