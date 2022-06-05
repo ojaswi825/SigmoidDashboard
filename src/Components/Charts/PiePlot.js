@@ -32,7 +32,13 @@ function PiePlot({ startDate, endDate, title }) {
                     {
                         label: "No. of impressions",
                         data: data.map((item) => item.impressions_offered),
-                        backgroundColor: Array(data.length).fill("#fe4439"),
+                        backgroundColor: [
+                            "#c62828",
+                            "#d32f2f",
+                            "#f44336",
+                            "#ef5350",
+                            "#e57373",
+                        ],
                     },
                 ],
             };

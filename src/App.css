@@ -13,3 +13,7 @@
     align-items: center;
     margin: 0.8rem;
 }
+
+.sdp {
+    --theme-color: #fe4439 !important; /* violet color */
+}
