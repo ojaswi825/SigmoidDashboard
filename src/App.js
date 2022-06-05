@@ -10,7 +10,7 @@ import Logout from "./Pages/Logout";
 
 function App() {
     return (
-        <div className="App" style={{ overflowX: "auto" }}>
+        <div className="App">
             <Provider store={appStore}>
                 <Router>
                     <Routes>

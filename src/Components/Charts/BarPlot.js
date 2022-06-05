@@ -1,6 +1,8 @@
-import { Box, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { BarChart, XAxis, YAxis, Tooltip, CartesianGrid, Bar } from "recharts";
+
+import { Box, Text } from "@chakra-ui/react";
+import Chart from "chart.js/auto";
+
 import LoadingScreen from "../../Utilities/LoadingScreen";
 import InvalidRange from "../../Utilities/InvalidRange";
 
@@ -8,22 +10,42 @@ import { fetchData } from "../../Services/FetchData";
 
 function BarPlot({ startDate, endDate, title, boxStyles }) {
     const [data, setData] = useState([]);
+    const [ctx, setCtx] = useState(null);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         setLoading(true);
-        fetchData(startDate, endDate, "bar", 5).then((data) => {
-            setData(data);
-            setLoading(false);
-        });
-
+        async function getData() {
+            const responseData = await fetchData(startDate, endDate, "bar", 5);
+            setData(responseData);
+            setCtx(document.getElementById("barPlot"));
+        }
+        getData();
         // eslint-disable-next-line
     }, []);
 
     useEffect(() => {
-        console.log(data);
-        console.log(loading);
-    }, [data, loading]);
+        const chartData = {
+            labels: data.map((item) => item.publisherId),
+            datasets: [
+                {
+                    label: "No. of impressions",
+                    data: data.map((item) => item.impressions_offered),
+                    backgroundColor: Array(data.length).fill("#fe4439"),
+                },
+            ],
+        };
+        const config = {
+            type: "bar",
+            data: chartData,
+            options: {},
+        };
+        const barChart = new Chart(ctx, config);
+        setLoading(false);
+
+        return () => barChart.destroy();
+        // eslint-disable-next-line
+    }, [ctx]);
 
     return (
         <Box style={boxStyles}>
@@ -31,26 +53,15 @@ function BarPlot({ startDate, endDate, title, boxStyles }) {
             {!loading && parseInt(startDate) > parseInt(endDate) && (
                 <InvalidRange />
             )}
-            {!loading && data && (
-                <>
-                    <Text fontSize="3xl" marginBottom="1rem">
-                        {title}
-                    </Text>
-                    <hr />
-                    <BarChart
-                        style={{ overflowX: "scroll" }}
-                        width={900}
-                        height={500}
-                        data={data}
-                    >
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="publisherId" />
-                        <YAxis />
-                        <Tooltip />
-                        <Bar dataKey="impressions_offered" fill="#8884d8" />
-                    </BarChart>
-                </>
-            )}
+
+            <>
+                <Text fontSize="3xl" marginBottom="1rem">
+                    {title}
+                </Text>
+                <hr />
+
+                <canvas id="barPlot"></canvas>
+            </>
         </Box>
     );
 }

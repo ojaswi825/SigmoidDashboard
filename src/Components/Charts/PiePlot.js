@@ -1,23 +1,51 @@
 import React, { useEffect, useState } from "react";
-import { Box, grid, Text } from "@chakra-ui/react";
-import { PieChart, Pie, Tooltip } from "recharts";
+
+import { Box, Text } from "@chakra-ui/react";
+import Chart from "chart.js/auto";
 
 import LoadingScreen from "../../Utilities/LoadingScreen";
 import InvalidRange from "../../Utilities/InvalidRange";
+
 import { fetchData } from "../../Services/FetchData";
 
 function PiePlot({ startDate, endDate, title, boxStyles }) {
     const [data, setData] = useState([]);
+    const [ctx, setCtx] = useState(null);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         setLoading(true);
-        fetchData(startDate, endDate, "pie", 5).then((data) => {
-            setData(data);
-            setLoading(false);
-        });
+        async function getData() {
+            const responseData = await fetchData(startDate, endDate, "bar", 5);
+            setData(responseData);
+            setCtx(document.getElementById("piePlot"));
+        }
+        getData();
         // eslint-disable-next-line
     }, []);
+
+    useEffect(() => {
+        const chartData = {
+            labels: data.map((item) => item.publisherId),
+            datasets: [
+                {
+                    label: "No. of impressions",
+                    data: data.map((item) => item.impressions_offered),
+                    backgroundColor: Array(data.length).fill("#fe4439"),
+                },
+            ],
+        };
+        const config = {
+            type: "doughnut",
+            data: chartData,
+            options: {},
+        };
+        const barChart = new Chart(ctx, config);
+        setLoading(false);
+
+        return () => barChart.destroy();
+        // eslint-disable-next-line
+    }, [ctx]);
 
     return (
         <Box style={boxStyles}>
@@ -25,26 +53,12 @@ function PiePlot({ startDate, endDate, title, boxStyles }) {
                 <InvalidRange />
             )}
             {loading && <LoadingScreen boxStyles={boxStyles} />}
-            {!loading && data && (
-                <>
-                    <Text fontSize="3xl">{title}</Text>
-                    <hr style={{ marginBottom: "4rem" }} />
-                    <PieChart width={400} height={250}>
-                        <Pie
-                            data={data}
-                            dataKey="impressions_offered"
-                            nameKey="publisherId"
-                            cx="50%"
-                            cy="50%"
-                            innerRadius={70}
-                            outerRadius={100}
-                            fill="#8884d8"
-                            label={true}
-                        />
-                        <Tooltip />
-                    </PieChart>
-                </>
-            )}
+
+            <>
+                <Text fontSize="3xl">{title}</Text>
+                <hr style={{ marginBottom: "2rem" }} />
+                <canvas id="piePlot"></canvas>
+            </>
         </Box>
     );
 }
