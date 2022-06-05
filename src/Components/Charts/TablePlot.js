@@ -16,7 +16,7 @@ import { fetchData } from "../../Services/FetchData";
 import LoadingScreen from "../../Utilities/LoadingScreen";
 import InvalidRange from "../../Utilities/InvalidRange";
 
-function TablePlot({ startDate, endDate, title }) {
+function TablePlot({ startDate, endDate, title, boxStyles }) {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
 
@@ -30,8 +30,8 @@ function TablePlot({ startDate, endDate, title }) {
     }, []);
 
     return (
-        <Box border="2px" marginLeft="1rem">
-            {loading && <LoadingScreen />}
+        <Box style={boxStyles} marginLeft="1rem">
+            {loading && <LoadingScreen boxStyles={boxStyles} />}
             {!loading && parseInt(startDate) > parseInt(endDate) && (
                 <InvalidRange />
             )}

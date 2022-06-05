@@ -6,7 +6,7 @@ import InvalidRange from "../../Utilities/InvalidRange";
 
 import { fetchData } from "../../Services/FetchData";
 
-function BarPlot({ startDate, endDate, title }) {
+function BarPlot({ startDate, endDate, title, boxStyles }) {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
 
@@ -26,8 +26,8 @@ function BarPlot({ startDate, endDate, title }) {
     }, [data, loading]);
 
     return (
-        <Box border="2px">
-            {loading && <LoadingScreen />}
+        <Box style={boxStyles}>
+            {loading && <LoadingScreen boxStyles={boxStyles} />}
             {!loading && parseInt(startDate) > parseInt(endDate) && (
                 <InvalidRange />
             )}

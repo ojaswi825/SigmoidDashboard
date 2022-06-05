@@ -1,5 +1,5 @@
 import React from "react";
-import { Flex, Button, Spacer, Text, useToast } from "@chakra-ui/react";
+import { Box, Button, Spacer, Text, useToast } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 
@@ -29,18 +29,29 @@ function Navbar(props) {
     };
 
     return (
-        <Flex background="black" align="center" height="3rem" padding="1rem">
-            <Text color="white">Dashboard</Text>
+        <Box
+            display="flex"
+            background="black"
+            alignItems="center"
+            height="5rem"
+            padding="2rem"
+            width="100%"
+            style={{ boxShadow: "0 5px 10px #AAA7A7", position: "sticky" }}
+        >
+            <Text fontSize="4xl" color="white">
+                Dashboard
+            </Text>
             <Spacer />
             <Button
                 background="black"
                 color="#FE4A49"
-                width="20%"
+                fontSize="xl"
+                width="max-content"
                 onClick={handleLogout}
             >
                 Logout
             </Button>
-        </Flex>
+        </Box>
     );
 }
 

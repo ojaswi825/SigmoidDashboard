@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Box, Text } from "@chakra-ui/react";
+import { Box, grid, Text } from "@chakra-ui/react";
 import { PieChart, Pie, Tooltip } from "recharts";
 
 import LoadingScreen from "../../Utilities/LoadingScreen";
 import InvalidRange from "../../Utilities/InvalidRange";
 import { fetchData } from "../../Services/FetchData";
 
-function PiePlot({ startDate, endDate, title }) {
+function PiePlot({ startDate, endDate, title, boxStyles }) {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
 
@@ -20,17 +20,15 @@ function PiePlot({ startDate, endDate, title }) {
     }, []);
 
     return (
-        <Box border="2px">
+        <Box style={boxStyles}>
             {!loading && parseInt(startDate) > parseInt(endDate) && (
                 <InvalidRange />
             )}
-            {loading && <LoadingScreen />}
+            {loading && <LoadingScreen boxStyles={boxStyles} />}
             {!loading && data && (
                 <>
-                    <Text fontSize="3xl" marginBottom="1rem">
-                        {title}
-                    </Text>
-                    <hr />
+                    <Text fontSize="3xl">{title}</Text>
+                    <hr style={{ marginBottom: "4rem" }} />
                     <PieChart width={400} height={250}>
                         <Pie
                             data={data}

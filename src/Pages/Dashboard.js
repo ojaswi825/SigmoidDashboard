@@ -13,6 +13,15 @@ import BarPlot from "../Components/Charts/BarPlot";
 
 import { getDateRange } from "../Services/GetDateRange";
 
+const boxStyles = {
+    boxShadow: "0 5px 10px #AAA7A7",
+    backgroundColor: "#ffffff",
+    borderRadius: "0.5rem",
+    padding: "1rem",
+    justifyContent: "center",
+    alignItems: "center",
+};
+
 const mapStateToProps = (state) => {
     return {
         localToken: state.authentication.localToken,
@@ -56,23 +65,26 @@ function Dashboard(props) {
     };
 
     return (
-        <div>
+        <div style={{ width: "max-content" }}>
             <Navbar />
             <Text fontSize="5xl" marginTop="2rem" marginLeft="2rem">
                 Data Dashboard
             </Text>
             <hr />
-            <Box display="flex" marginTop="2rem" border="2px" padding="2rem">
-                <VStack w="100%" align="left">
-                    <Box display="flex" marginBottom="5rem" border="2px">
-                        <Box border="2px">
+            <Box
+                display="flex"
+                marginTop="2rem"
+                padding="2rem"
+                minW="100vw"
+                maxW="max-content"
+            >
+                <VStack align="left" w="70%">
+                    <Box display="flex" marginBottom="5rem">
+                        <Box style={boxStyles} w="55%">
                             <Text fontSize="3xl">Pick a range</Text>
                             <hr />
-                            <Box
-                                display="flex"
-                                justifyContent="space-between"
-                                border="2px"
-                            >
+                            <br />
+                            <Box display="flex" justifyContent="space-between">
                                 {minDate && maxDate && start && end && (
                                     <DateRange
                                         title="Pick a start date"
@@ -96,6 +108,7 @@ function Dashboard(props) {
                         <Spacer />
                         {minDate && maxDate && (
                             <PiePlot
+                                boxStyles={boxStyles}
                                 title="Impressions ratio"
                                 key={
                                     minDate.toString() +
@@ -110,6 +123,7 @@ function Dashboard(props) {
 
                     {minDate && maxDate && (
                         <BarPlot
+                            boxStyles={boxStyles}
                             title="Publisher vs Impressions"
                             key={
                                 minDate.toString() + maxDate.toString() + "bar"
@@ -123,6 +137,7 @@ function Dashboard(props) {
 
                 {minDate && maxDate && (
                     <TablePlot
+                        boxStyles={boxStyles}
                         title="Total impressions"
                         key={minDate.toString() + maxDate.toString() + "table"}
                         startDate={minDate.getTime().toString()}

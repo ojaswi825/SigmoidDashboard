@@ -4,7 +4,7 @@ import DatePicker from "sassy-datepicker";
 
 function DateRange(props) {
     return (
-        <Box border="2px">
+        <Box>
             <Text fontSize="xl" marginBottom="1rem">
                 {props.title}
             </Text>
