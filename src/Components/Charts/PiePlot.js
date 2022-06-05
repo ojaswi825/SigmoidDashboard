@@ -21,7 +21,7 @@ function PiePlot({ startDate, endDate, title, boxStyles }) {
             setCtx(document.getElementById("piePlot"));
         }
         getData();
-        setLoading(false);
+
         // eslint-disable-next-line
     }, []);
 
@@ -43,6 +43,7 @@ function PiePlot({ startDate, endDate, title, boxStyles }) {
                 options: {},
             };
             const barChart = new Chart(ctx, config);
+            setLoading(false);
 
             return () => barChart.destroy();
         }
@@ -51,17 +52,14 @@ function PiePlot({ startDate, endDate, title, boxStyles }) {
 
     return (
         <Box style={boxStyles}>
+            <>
+                <Text fontSize="3xl">{title}</Text>
+                <hr style={{ marginBottom: "2rem" }} />
+                <canvas id="piePlot"></canvas>
+            </>
+            {loading && <LoadingScreen />}
             {!loading && parseInt(startDate) > parseInt(endDate) && (
                 <InvalidRange />
-            )}
-            {loading && <LoadingScreen boxStyles={boxStyles} />}
-
-            {!loading && (
-                <>
-                    <Text fontSize="3xl">{title}</Text>
-                    <hr style={{ marginBottom: "2rem" }} />
-                    <canvas id="piePlot"></canvas>
-                </>
             )}
         </Box>
     );

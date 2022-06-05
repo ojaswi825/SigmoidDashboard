@@ -31,10 +31,6 @@ function TablePlot({ startDate, endDate, title, boxStyles }) {
 
     return (
         <Box style={boxStyles} marginLeft="1rem">
-            {loading && <LoadingScreen boxStyles={boxStyles} />}
-            {!loading && parseInt(startDate) > parseInt(endDate) && (
-                <InvalidRange />
-            )}
             {!loading && data && (
                 <>
                     <Text fontSize="3xl" marginBottom="1rem">
@@ -68,6 +64,10 @@ function TablePlot({ startDate, endDate, title, boxStyles }) {
                         </Table>
                     </TableContainer>
                 </>
+            )}
+            {loading && <LoadingScreen />}
+            {!loading && parseInt(startDate) > parseInt(endDate) && (
+                <InvalidRange />
             )}
         </Box>
     );

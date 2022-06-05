@@ -16,12 +16,11 @@ function BarPlot({ startDate, endDate, title, boxStyles }) {
     useEffect(() => {
         setLoading(true);
         async function getData() {
-            const responseData = await fetchData(startDate, endDate, "bar", 5);
+            const responseData = await fetchData(startDate, endDate, "bar", 10);
             setData(responseData);
             setCtx(document.getElementById("barPlot"));
         }
         getData();
-        setLoading(false);
         // eslint-disable-next-line
     }, []);
 
@@ -44,6 +43,7 @@ function BarPlot({ startDate, endDate, title, boxStyles }) {
             };
             const barChart = new Chart(ctx, config);
 
+            setLoading(false);
             return () => barChart.destroy();
         }
         // eslint-disable-next-line
@@ -51,20 +51,17 @@ function BarPlot({ startDate, endDate, title, boxStyles }) {
 
     return (
         <Box style={boxStyles}>
-            {loading && <LoadingScreen boxStyles={boxStyles} />}
+            <>
+                <Text fontSize="3xl" marginBottom="1rem">
+                    {title}
+                </Text>
+                <hr />
+
+                <canvas id="barPlot"></canvas>
+            </>
+            {loading && <LoadingScreen />}
             {!loading && parseInt(startDate) > parseInt(endDate) && (
                 <InvalidRange />
-            )}
-
-            {!loading && (
-                <>
-                    <Text fontSize="3xl" marginBottom="1rem">
-                        {title}
-                    </Text>
-                    <hr />
-
-                    <canvas id="barPlot"></canvas>
-                </>
             )}
         </Box>
     );
