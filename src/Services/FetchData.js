@@ -56,7 +56,13 @@ export const fetchData = async (
     };
 
     const response = await axios.post(dataEndpointURI, payload, options);
+
+    if (response.data.status.statusCode === "500") {
+        return [];
+    }
+
     const rawData = response.data.result.data;
+
     const parsedData = rawData.map((item) => {
         return {
             ...item,

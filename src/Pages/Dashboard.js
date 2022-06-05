@@ -1,8 +1,7 @@
-import { Flex, Spacer, VStack } from "@chakra-ui/react";
+import { Spacer, VStack, Text, Box } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 
 import DateRange from "../Components/Filters/DateRange";
 import Navbar from "../Components/Navigation/Navbar";
@@ -11,6 +10,8 @@ import { getLocalToken } from "../Redux/Authentication/AuthenticationActions";
 import PiePlot from "../Components/Charts/PiePlot";
 import TablePlot from "../Components/Charts/TablePlot";
 import BarPlot from "../Components/Charts/BarPlot";
+
+import { getDateRange } from "../Services/GetDateRange";
 
 const mapStateToProps = (state) => {
     return {
@@ -37,35 +38,12 @@ function Dashboard(props) {
         if (!props.localToken) {
             navigate("/logout");
         } else {
-            const token = localStorage.getItem("sigmoidLocalToken");
-            const dateRangeEndpointURI =
-                "https://sigviewauth.sigmoid.io/api/v1/getDateRange";
-            const options = {
-                headers: {
-                    "x-auth-token": token,
-                },
-            };
-            const payload = {
-                organization: "DemoTest",
-                view: "Auction",
-            };
-            axios
-                .post(dateRangeEndpointURI, payload, options)
-                .then((response) => {
-                    console.log(response);
-                    const startEpoch = response.data.result.startDate;
-                    const endEpoch = response.data.result.endDate;
-
-                    const startDate = new Date(parseInt(startEpoch));
-                    const endDate = new Date(parseInt(endEpoch));
-                    // endDate.setDate(endDate.getDate() - 1);
-
-                    console.log(startDate, endDate);
-                    setMinDate(startDate);
-                    setMaxDate(endDate);
-                    setStart(startDate);
-                    setEnd(endDate);
-                });
+            getDateRange().then((dates) => {
+                setMinDate(dates.startDate);
+                setMaxDate(dates.endDate);
+                setStart(dates.startDate);
+                setEnd(dates.endDate);
+            });
         }
         // eslint-disable-next-line
     }, []);
@@ -80,48 +58,78 @@ function Dashboard(props) {
     return (
         <div>
             <Navbar />
-            <Flex padding="2rem" w="40%">
-                {minDate && maxDate && start && end && (
-                    <DateRange
-                        defaultSelected={start}
-                        minDate={start}
-                        maxDate={end}
-                        onDateSelect={onMinDateSelect}
-                    />
-                )}
+            <Text fontSize="5xl" marginTop="2rem" marginLeft="2rem">
+                Data Dashboard
+            </Text>
+            <hr />
+            <Box display="flex" marginTop="2rem" border="2px" padding="2rem">
+                <VStack w="100%" align="left">
+                    <Box display="flex" marginBottom="5rem" border="2px">
+                        <Box border="2px">
+                            <Text fontSize="3xl">Pick a range</Text>
+                            <hr />
+                            <Box
+                                display="flex"
+                                justifyContent="space-between"
+                                border="2px"
+                            >
+                                {minDate && maxDate && start && end && (
+                                    <DateRange
+                                        title="Pick a start date"
+                                        defaultSelected={start}
+                                        minDate={start}
+                                        maxDate={end}
+                                        onDateSelect={onMinDateSelect}
+                                    />
+                                )}
+                                {minDate && maxDate && start && end && (
+                                    <DateRange
+                                        title="Pick an end date"
+                                        defaultSelected={end}
+                                        minDate={start}
+                                        maxDate={end}
+                                        onDateSelect={onMaxDateSelect}
+                                    />
+                                )}
+                            </Box>
+                        </Box>
+                        <Spacer />
+                        {minDate && maxDate && (
+                            <PiePlot
+                                title="Impressions ratio"
+                                key={
+                                    minDate.toString() +
+                                    maxDate.toString() +
+                                    "pie"
+                                }
+                                startDate={minDate.getTime().toString()}
+                                endDate={maxDate.getTime().toString()}
+                            />
+                        )}
+                    </Box>
+
+                    {minDate && maxDate && (
+                        <BarPlot
+                            title="Publisher vs Impressions"
+                            key={
+                                minDate.toString() + maxDate.toString() + "bar"
+                            }
+                            startDate={minDate.getTime().toString()}
+                            endDate={maxDate.getTime().toString()}
+                        />
+                    )}
+                </VStack>
                 <Spacer />
-                {minDate && maxDate && start && end && (
-                    <DateRange
-                        defaultSelected={end}
-                        minDate={start}
-                        maxDate={end}
-                        onDateSelect={onMaxDateSelect}
-                    />
-                )}
-            </Flex>
-            <VStack>
-                {minDate && maxDate && (
-                    <BarPlot
-                        key={minDate.toString() + maxDate.toString() + "bar"}
-                        startDate={minDate.getTime().toString()}
-                        endDate={maxDate.getTime().toString()}
-                    />
-                )}
-                {minDate && maxDate && (
-                    <PiePlot
-                        key={minDate.toString() + maxDate.toString() + "pie"}
-                        startDate={minDate.getTime().toString()}
-                        endDate={maxDate.getTime().toString()}
-                    />
-                )}
+
                 {minDate && maxDate && (
                     <TablePlot
+                        title="Total impressions"
                         key={minDate.toString() + maxDate.toString() + "table"}
                         startDate={minDate.getTime().toString()}
                         endDate={maxDate.getTime().toString()}
                     />
                 )}
-            </VStack>
+            </Box>
         </div>
     );
 }

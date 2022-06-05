@@ -1,10 +1,14 @@
 import React from "react";
-import { Box } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 import DatePicker from "sassy-datepicker";
 
 function DateRange(props) {
     return (
-        <Box borderWidth="1px" display="flex" justifyContent="center">
+        <Box border="2px">
+            <Text fontSize="xl" marginBottom="1rem">
+                {props.title}
+            </Text>
+            <hr />
             <DatePicker
                 selected={props.defaultSelected}
                 minDate={props.minDate}

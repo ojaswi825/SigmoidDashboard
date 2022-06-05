@@ -1,11 +1,12 @@
-import { Box } from "@chakra-ui/react";
+import { Box, Text } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { BarChart, XAxis, YAxis, Tooltip, CartesianGrid, Bar } from "recharts";
 import LoadingScreen from "../../Utilities/LoadingScreen";
+import InvalidRange from "../../Utilities/InvalidRange";
 
 import { fetchData } from "../../Services/FetchData";
 
-function BarPlot({ startDate, endDate }) {
+function BarPlot({ startDate, endDate, title }) {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
 
@@ -21,24 +22,34 @@ function BarPlot({ startDate, endDate }) {
 
     useEffect(() => {
         console.log(data);
-    }, [data]);
+        console.log(loading);
+    }, [data, loading]);
 
     return (
-        <Box w="max-content">
+        <Box border="2px">
             {loading && <LoadingScreen />}
+            {!loading && parseInt(startDate) > parseInt(endDate) && (
+                <InvalidRange />
+            )}
             {!loading && data && (
-                <BarChart
-                    style={{ overflowX: "scroll" }}
-                    width={1000}
-                    height={250}
-                    data={data}
-                >
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="publisherId" />
-                    <YAxis />
-                    <Tooltip />
-                    <Bar dataKey="impressions_offered" fill="#8884d8" />
-                </BarChart>
+                <>
+                    <Text fontSize="3xl" marginBottom="1rem">
+                        {title}
+                    </Text>
+                    <hr />
+                    <BarChart
+                        style={{ overflowX: "scroll" }}
+                        width={900}
+                        height={500}
+                        data={data}
+                    >
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="publisherId" />
+                        <YAxis />
+                        <Tooltip />
+                        <Bar dataKey="impressions_offered" fill="#8884d8" />
+                    </BarChart>
+                </>
             )}
         </Box>
     );
