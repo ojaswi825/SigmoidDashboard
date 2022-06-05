@@ -6,7 +6,7 @@ import { Provider } from "react-redux";
 import { appStore } from "./Redux/AppStore";
 import Authentication from "./Pages/Authentication";
 import Dashboard from "./Pages/Dashboard";
-import Logout from "./Pages/Logout";
+import NotFound404 from "./Pages/NotFound404";
 
 function App() {
     return (
@@ -16,7 +16,7 @@ function App() {
                     <Routes>
                         <Route path="/" element={<Authentication />} />
                         <Route path="/dashboard" element={<Dashboard />} />
-                        <Route path="*" element={<Logout />} />
+                        <Route path="*" element={<NotFound404 />} />
                     </Routes>
                 </Router>
             </Provider>
