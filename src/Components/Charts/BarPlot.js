@@ -8,7 +8,7 @@ import InvalidRange from "../../Utilities/InvalidRange";
 
 import { fetchData } from "../../Services/FetchData";
 
-function BarPlot({ startDate, endDate, title, boxStyles }) {
+function BarPlot({ startDate, endDate, title }) {
     const [data, setData] = useState([]);
     const [ctx, setCtx] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -50,7 +50,7 @@ function BarPlot({ startDate, endDate, title, boxStyles }) {
     }, [ctx]);
 
     return (
-        <Box style={boxStyles}>
+        <Box border="2px" className="card">
             <>
                 <Text fontSize="3xl" marginBottom="1rem">
                     {title}

@@ -1,26 +1,17 @@
-import { Spacer, VStack, Text, Box } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import DateRange from "../Components/Filters/DateRange";
-import Navbar from "../Components/Navigation/Navbar";
+import { Spacer, VStack, Text, Box } from "@chakra-ui/react";
 
-import { getLocalToken } from "../Redux/Authentication/AuthenticationActions";
+import Navbar from "../Components/Navigation/Navbar";
+import DateRangePicker from "../Components/Filters/DateRangePicker";
 import PiePlot from "../Components/Charts/PiePlot";
 import TablePlot from "../Components/Charts/TablePlot";
 import BarPlot from "../Components/Charts/BarPlot";
 
+import { getLocalToken } from "../Redux/Authentication/AuthenticationActions";
 import { getDateRange } from "../Services/GetDateRange";
-
-const boxStyles = {
-    boxShadow: "0 5px 10px #AAA7A7",
-    backgroundColor: "#ffffff",
-    borderRadius: "0.5rem",
-    padding: "0.8rem",
-    justifyContent: "center",
-    alignItems: "center",
-};
 
 const mapStateToProps = (state) => {
     return {
@@ -65,50 +56,36 @@ function Dashboard(props) {
     };
 
     return (
-        <div style={{ width: "max-content" }}>
+        <div style={{ width: "max-content", border: "2px solid black" }}>
             <Navbar />
             <Text fontSize="5xl" marginTop="2rem" marginLeft="2rem">
                 Data Dashboard
             </Text>
             <hr />
             <Box
+                border="2px"
                 display="flex"
                 marginTop="2rem"
                 padding="2rem"
-                minW="100vw"
+                minW="98vw"
                 maxW="max-content"
             >
-                <VStack align="left" w="70%">
-                    <Box display="flex" marginBottom="5rem">
-                        <Box style={boxStyles} w="55%">
-                            <Text fontSize="3xl">Pick a range</Text>
-                            <hr />
-                            <br />
-                            <Box display="flex" justifyContent="space-between">
-                                {minDate && maxDate && start && end && (
-                                    <DateRange
-                                        title="Pick a start date"
-                                        defaultSelected={start}
-                                        minDate={start}
-                                        maxDate={end}
-                                        onDateSelect={onMinDateSelect}
-                                    />
-                                )}
-                                {minDate && maxDate && start && end && (
-                                    <DateRange
-                                        title="Pick an end date"
-                                        defaultSelected={end}
-                                        minDate={start}
-                                        maxDate={end}
-                                        onDateSelect={onMaxDateSelect}
-                                    />
-                                )}
-                            </Box>
-                        </Box>
+                <VStack align="left" w="60%">
+                    <Box border="2px" display="flex" marginBottom="5rem">
+                        {minDate && maxDate && start && end && (
+                            <DateRangePicker
+                                minDate={minDate}
+                                maxDate={maxDate}
+                                start={start}
+                                end={end}
+                                onMinDateSelect={onMinDateSelect}
+                                onMaxDateSelect={onMaxDateSelect}
+                            />
+                        )}
+
                         <Spacer />
                         {minDate && maxDate && (
                             <PiePlot
-                                boxStyles={boxStyles}
                                 title="Impressions ratio"
                                 key={
                                     minDate.toString() +
@@ -123,7 +100,6 @@ function Dashboard(props) {
 
                     {minDate && maxDate && (
                         <BarPlot
-                            boxStyles={boxStyles}
                             title="Publisher vs Impressions"
                             key={
                                 minDate.toString() + maxDate.toString() + "bar"
@@ -133,11 +109,9 @@ function Dashboard(props) {
                         />
                     )}
                 </VStack>
-                <Spacer />
 
                 {minDate && maxDate && (
                     <TablePlot
-                        boxStyles={boxStyles}
                         title="Total impressions"
                         key={minDate.toString() + maxDate.toString() + "table"}
                         startDate={minDate.getTime().toString()}

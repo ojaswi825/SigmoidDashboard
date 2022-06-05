@@ -8,7 +8,7 @@ import InvalidRange from "../../Utilities/InvalidRange";
 
 import { fetchData } from "../../Services/FetchData";
 
-function PiePlot({ startDate, endDate, title, boxStyles }) {
+function PiePlot({ startDate, endDate, title }) {
     const [data, setData] = useState([]);
     const [ctx, setCtx] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -51,7 +51,7 @@ function PiePlot({ startDate, endDate, title, boxStyles }) {
     }, [ctx]);
 
     return (
-        <Box style={boxStyles}>
+        <Box border="2px" className="card">
             <>
                 <Text fontSize="3xl">{title}</Text>
                 <hr style={{ marginBottom: "2rem" }} />

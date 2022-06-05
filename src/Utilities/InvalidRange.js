@@ -3,7 +3,13 @@ import { Box } from "@chakra-ui/react";
 
 function InvalidRange() {
     return (
-        <Box h={250} display="flex" alignItems="center" justifyContent="center">
+        <Box
+            border="2px"
+            h={250}
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+        >
             <div>
                 <img
                     src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif"

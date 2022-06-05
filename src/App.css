@@ -3,3 +3,12 @@
     padding: 0;
     text-align: left;
 }
+
+.card {
+    box-shadow: 0 5px 10px #aaa7a7;
+    background-color: #ffffff;
+    border-radius: 0.5rem;
+    padding: 0.8rem;
+    justify-content: center;
+    align-items: center;
+}
