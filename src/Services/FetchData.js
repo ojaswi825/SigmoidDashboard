@@ -144,7 +144,8 @@ export const fetchPieData = async (
     const parsedData = rawData.map((item) => {
         return {
             ...item,
-            impressions_offered: parseInt(item.impressions_offered),
+            CM001: parseFloat(item.CM001),
+            CM001_percent: parseFloat(item.CM001_percent),
         };
     });
 
