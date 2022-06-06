@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { Box, Button, Text, VStack } from "@chakra-ui/react";
+import { Button, Text, VStack } from "@chakra-ui/react";
 import Moment from "react-moment";
 import DatePicker from "sassy-datepicker";
 
@@ -39,14 +39,15 @@ function DateRangePicker(props) {
     };
 
     return (
-        <Box className="card" w="300px">
+        <div className="card" style={{ width: "max-content" }}>
             <Text fontSize="3xl">Pick a range</Text>
             <hr />
             <br />
-            <VStack align="left">
+            <VStack align="center">
                 <Button
                     color="white"
                     backgroundColor="#fe4439"
+                    w="100%"
                     onClick={() => handleStartShow()}
                 >
                     <Moment format="DD MMM, YYYY" date={props.minDate} />
@@ -62,6 +63,7 @@ function DateRangePicker(props) {
                 <Button
                     color="white"
                     backgroundColor="#fe4439"
+                    w="100%"
                     onClick={() => handleEndShow()}
                 >
                     <Moment format="DD MMM, YYYY" date={props.maxDate} />
@@ -76,7 +78,7 @@ function DateRangePicker(props) {
                 )}
                 {error && <Text color="red">Please select a valid range</Text>}
             </VStack>
-        </Box>
+        </div>
     );
 }
 

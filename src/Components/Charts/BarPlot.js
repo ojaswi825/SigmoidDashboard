@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { Box, Text } from "@chakra-ui/react";
+import { Text } from "@chakra-ui/react";
 import Chart from "chart.js/auto";
 
 import LoadingScreen from "../../Utilities/LoadingScreen";
@@ -19,7 +19,7 @@ function BarPlot({ startDate, endDate, title }) {
                 startDate,
                 endDate,
                 "bar",
-                10
+                30
             );
             setData(responseData);
             setCtx(document.getElementById("barPlot"));
@@ -54,7 +54,7 @@ function BarPlot({ startDate, endDate, title }) {
     }, [ctx]);
 
     return (
-        <Box className="card">
+        <div className="card barPlot">
             <>
                 <Text fontSize="3xl" marginBottom="1rem">
                     {title}
@@ -64,7 +64,7 @@ function BarPlot({ startDate, endDate, title }) {
                 <canvas id="barPlot"></canvas>
             </>
             {loading && <LoadingScreen />}
-        </Box>
+        </div>
     );
 }
 

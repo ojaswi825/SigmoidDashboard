@@ -12,8 +12,22 @@
     justify-content: center;
     align-items: center;
     margin: 0.8rem;
+    height: "100%";
+    min-width: 380px;
+    border: 2px solid black;
+}
+
+.barPlot {
+    grid-column: 1 / span 2;
 }
 
 .sdp {
     --theme-color: #fe4439 !important; /* violet color */
+}
+
+@media only screen and (max-width: 800px) {
+    .datePieBarContainer {
+        display: flex;
+        flex-wrap: wrap;
+    }
 }

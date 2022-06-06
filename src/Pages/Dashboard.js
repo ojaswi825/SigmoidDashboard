@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { Spacer, VStack, Text, Box } from "@chakra-ui/react";
+import { Text } from "@chakra-ui/react";
 
 import Navbar from "../Components/Navigation/Navbar";
 import DateRangePicker from "../Components/Filters/DateRangePicker";
@@ -62,39 +62,45 @@ function Dashboard(props) {
                 Data Dashboard
             </Text>
             <hr />
-            <Box
-                display="flex"
-                marginTop="2rem"
-                padding="2rem"
-                minW="98vw"
-                maxW="max-content"
+            <div
+                style={{
+                    display: "flex",
+                    flexWrap: "wrap",
+                    justifyContent: "space-between",
+                    minWidth: "98vw",
+                    marginTop: "3rem",
+                }}
             >
-                <VStack align="left" w="60%">
-                    <Box display="flex" marginBottom="5rem">
-                        {minDate && maxDate && start && end && (
-                            <DateRangePicker
-                                minDate={minDate}
-                                maxDate={maxDate}
-                                start={start}
-                                end={end}
-                                onMinDateSelect={onMinDateSelect}
-                                onMaxDateSelect={onMaxDateSelect}
-                            />
-                        )}
-                        <Spacer />
-                        {minDate && maxDate && (
-                            <PiePlot
-                                title="Impressions ratio"
-                                key={
-                                    minDate.toString() +
-                                    maxDate.toString() +
-                                    "pie"
-                                }
-                                startDate={minDate.getTime().toString()}
-                                endDate={maxDate.getTime().toString()}
-                            />
-                        )}
-                    </Box>
+                <div
+                    className="datePieBarContainer"
+                    style={{
+                        display: "grid",
+                        border: "1px solid black",
+                        gridTemplateColumns: "auto auto",
+                        marginBottom: "5rem",
+                        width: "max-content",
+                    }}
+                >
+                    {minDate && maxDate && start && end && (
+                        <DateRangePicker
+                            minDate={minDate}
+                            maxDate={maxDate}
+                            start={start}
+                            end={end}
+                            onMinDateSelect={onMinDateSelect}
+                            onMaxDateSelect={onMaxDateSelect}
+                        />
+                    )}
+                    {minDate && maxDate && (
+                        <PiePlot
+                            title="Impressions ratio"
+                            key={
+                                minDate.toString() + maxDate.toString() + "pie"
+                            }
+                            startDate={minDate.getTime().toString()}
+                            endDate={maxDate.getTime().toString()}
+                        />
+                    )}
 
                     {minDate && maxDate && (
                         <BarPlot
@@ -106,8 +112,7 @@ function Dashboard(props) {
                             endDate={maxDate.getTime().toString()}
                         />
                     )}
-                </VStack>
-                <Spacer />
+                </div>
                 {minDate && maxDate && (
                     <TablePlot
                         title="Total impressions"
@@ -116,7 +121,7 @@ function Dashboard(props) {
                         endDate={maxDate.getTime().toString()}
                     />
                 )}
-            </Box>
+            </div>
         </div>
     );
 }

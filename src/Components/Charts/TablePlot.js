@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {
     Text,
-    Box,
     Table,
     Thead,
     Tbody,
@@ -21,7 +20,7 @@ function TablePlot({ startDate, endDate, title }) {
 
     useEffect(() => {
         setLoading(true);
-        fetchBarTableData(startDate, endDate, "table", 17).then((data) => {
+        fetchBarTableData(startDate, endDate, "table", 19).then((data) => {
             setData(data);
             setLoading(false);
         });
@@ -29,14 +28,14 @@ function TablePlot({ startDate, endDate, title }) {
     }, []);
 
     return (
-        <Box className="card">
+        <div className="card tablePlot" style={{ minWidth: "fit-content" }}>
             {!loading && data && (
                 <>
                     <Text fontSize="3xl" marginBottom="1rem">
                         {title}
                     </Text>
                     <hr />
-                    <TableContainer w="500">
+                    <TableContainer>
                         <Table>
                             <Thead>
                                 <Tr>
@@ -65,7 +64,7 @@ function TablePlot({ startDate, endDate, title }) {
                 </>
             )}
             {loading && <LoadingScreen />}
-        </Box>
+        </div>
     );
 }
 

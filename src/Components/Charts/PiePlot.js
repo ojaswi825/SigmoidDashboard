@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { Box, Text } from "@chakra-ui/react";
+import { Text } from "@chakra-ui/react";
 import Chart from "chart.js/auto";
 
 import LoadingScreen from "../../Utilities/LoadingScreen";
@@ -61,14 +61,14 @@ function PiePlot({ startDate, endDate, title }) {
     }, [ctx]);
 
     return (
-        <Box className="card">
+        <div className="card">
             <>
                 <Text fontSize="3xl">{title}</Text>
                 <hr style={{ marginBottom: "2rem" }} />
                 <canvas id="piePlot"></canvas>
             </>
             {loading && <LoadingScreen />}
-        </Box>
+        </div>
     );
 }
 
