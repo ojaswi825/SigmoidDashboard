@@ -75,7 +75,6 @@ function Dashboard(props) {
                     className="datePieBarContainer"
                     style={{
                         display: "grid",
-                        border: "1px solid black",
                         gridTemplateColumns: "auto auto",
                         marginBottom: "5rem",
                         width: "max-content",
