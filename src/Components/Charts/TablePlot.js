@@ -12,7 +12,7 @@ import {
     TableContainer,
 } from "@chakra-ui/react";
 
-import { fetchData } from "../../Services/FetchData";
+import { fetchBarTableData } from "../../Services/FetchData";
 import LoadingScreen from "../../Utilities/LoadingScreen";
 
 function TablePlot({ startDate, endDate, title }) {
@@ -21,7 +21,7 @@ function TablePlot({ startDate, endDate, title }) {
 
     useEffect(() => {
         setLoading(true);
-        fetchData(startDate, endDate, "table", 17).then((data) => {
+        fetchBarTableData(startDate, endDate, "table", 17).then((data) => {
             setData(data);
             setLoading(false);
         });

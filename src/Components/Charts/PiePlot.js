@@ -5,7 +5,7 @@ import Chart from "chart.js/auto";
 
 import LoadingScreen from "../../Utilities/LoadingScreen";
 
-import { fetchData } from "../../Services/FetchData";
+import { fetchPieData } from "../../Services/FetchData";
 
 function PiePlot({ startDate, endDate, title }) {
     const [data, setData] = useState([]);
@@ -15,7 +15,12 @@ function PiePlot({ startDate, endDate, title }) {
     useEffect(() => {
         setLoading(true);
         async function getData() {
-            const responseData = await fetchData(startDate, endDate, "bar", 5);
+            const responseData = await fetchPieData(
+                startDate,
+                endDate,
+                "pie",
+                5
+            );
             setData(responseData);
             setCtx(document.getElementById("piePlot"));
         }
@@ -31,7 +36,7 @@ function PiePlot({ startDate, endDate, title }) {
                 datasets: [
                     {
                         label: "No. of impressions",
-                        data: data.map((item) => item.impressions_offered),
+                        data: data.map((item) => item.CM001),
                         backgroundColor: [
                             "#c62828",
                             "#d32f2f",
@@ -43,7 +48,7 @@ function PiePlot({ startDate, endDate, title }) {
                 ],
             };
             const config = {
-                type: "doughnut",
+                type: "pie",
                 data: chartData,
                 options: {},
             };

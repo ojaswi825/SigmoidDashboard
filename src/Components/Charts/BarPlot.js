@@ -5,7 +5,7 @@ import Chart from "chart.js/auto";
 
 import LoadingScreen from "../../Utilities/LoadingScreen";
 
-import { fetchData } from "../../Services/FetchData";
+import { fetchBarTableData } from "../../Services/FetchData";
 
 function BarPlot({ startDate, endDate, title }) {
     const [data, setData] = useState([]);
@@ -15,7 +15,12 @@ function BarPlot({ startDate, endDate, title }) {
     useEffect(() => {
         setLoading(true);
         async function getData() {
-            const responseData = await fetchData(startDate, endDate, "bar", 10);
+            const responseData = await fetchBarTableData(
+                startDate,
+                endDate,
+                "bar",
+                10
+            );
             setData(responseData);
             setCtx(document.getElementById("barPlot"));
         }
