@@ -5,7 +5,7 @@
 <div align="center">
 <h3 align="center">Sigmoid Dashboard</h3>
 
-Sigmoid Dashboard is an front-end assignment project for Front-end developer role at Sigmoid.
+Sigmoid Dashboard is an front-end assignment project for Front-end developer role at Sigmoid Analytics.
 <br/>
 <br/>
 [Heroku Demo](https://intense-reaches-02835.herokuapp.com/) |
