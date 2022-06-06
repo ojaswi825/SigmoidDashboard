@@ -31,6 +31,7 @@ Sigmoid Dashboard is an front-end assignment project for Front-end developer rol
         <li><a href="#prerequisites">Prerequisites</a></li>
         <li><a href="#installation">Installation</a></li>
         <li><a href="#demolinks">Demo Links</a></li>
+        <li><a href="#notes">Notes</a></li>
       </ul>
     </li>
     <li><a href="#contact">Contact</a></li>
@@ -96,6 +97,10 @@ To get a local copy up and running follow these simple example steps.
 -   [Functional Test Reports](https://docs.google.com/spreadsheets/d/1Voy9vuvRON-BCWNj5PNULYqPMV9pU7oCaC-mPXlBewk/edit?usp=sharing)
 
 <!-- CONTACT -->
+
+## Notes
+
+<p>The number of data points to plot can be customised in the individual components. Currently the datapoints are set such that the charts look good and understandable, however it can be changed in the code in the individual component.</p>
 
 ## Contact
 
