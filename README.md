@@ -51,6 +51,7 @@ This application is made by Ojaswi Athghara using React JS as primary front-end 
 -   [React Router v6](https://reactrouter.com/)
 -   [Chakra UI](https://chakra-ui.com/)
 -   [Redux](https://redux.js.org/)
+-   [Chart.js](https://www.chartjs.org/)
 -   [React Moments](https://www.npmjs.com/package/react-moment)
 -   [Sassy DatePicker](https://www.npmjs.com/package/sassy-datepicker)
 
