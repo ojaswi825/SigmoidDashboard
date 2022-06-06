@@ -32,7 +32,7 @@ function PiePlot({ startDate, endDate, title }) {
     useEffect(() => {
         if (ctx) {
             const chartData = {
-                labels: data.map((item) => item.publisherId),
+                labels: data.map((item) => item.advertiserId),
                 datasets: [
                     {
                         label: "No. of impressions",
