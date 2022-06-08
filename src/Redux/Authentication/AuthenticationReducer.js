@@ -8,6 +8,9 @@ export const authenticationReducer = (state = intitialState, action) => {
     switch (action.type) {
         case SET_LOCAL_TOKEN:
             localStorage.setItem("sigmoidLocalToken", action.payload.token);
+            // let currentTime = new Date.now();
+            // let expirationTime = new Date(currentTime.getTime() + minutes * 120000);
+            // document.cookie = `sigmoidLocalToken=${action.payload.token}; expires=${expirationTime}`;
             return {
                 ...state,
 

@@ -21,7 +21,12 @@ function TablePlot({ startDate, endDate, title }) {
     useEffect(() => {
         setLoading(true);
         fetchBarTableData(startDate, endDate, "table", 19).then((data) => {
-            setData(data);
+            setData(
+                Array.sort(
+                    data,
+                    (a, b) => a.impressions_offered > b.impressions_offered
+                )
+            );
             setLoading(false);
         });
         // eslint-disable-next-line

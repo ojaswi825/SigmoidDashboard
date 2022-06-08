@@ -25,7 +25,6 @@ function PiePlot({ startDate, endDate, title }) {
             setCtx(document.getElementById("piePlot"));
         }
         getData();
-
         // eslint-disable-next-line
     }, []);
 
